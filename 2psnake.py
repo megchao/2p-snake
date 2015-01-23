@@ -1,9 +1,10 @@
 """
 6.177 Final Project (IAP 2015)
+Two-Player Snake!
 Completed by:
-Megan Chao (megchao@mit.edu)
-Arden Marin (ammarin@mit.edu)
-Lisa Deng (lisadeng@mit.edu)
+Megan Chao
+Arden Marin
+Lisa Deng
 """
 
 import pygame, sys, random
@@ -25,7 +26,7 @@ def new_game():
     pygame.init() # initialize all imported pygame modules
     window_size = [WIDTH * DIMENSION + 20, HEIGHT * DIMENSION + 70] #DENG
     screen = pygame.display.set_mode(window_size)
-    pygame.display.set_caption("6.177 Final Project") # caption sets title of Window 
+    pygame.display.set_caption("***2P Snake***") # caption sets title of Window 
     board = Board(DIMENSION, 0, screen) #DENG
     clock = pygame.time.Clock()
     board.round_and_score() #redraws the round and scores
@@ -69,6 +70,7 @@ def main_loop(screen, board, clock, stop, pause): #CHAO
             pygame.display.flip()
             clock.tick(5)            
     pygame.quit() # closes things, keeps idle from freezing
+
 class Board:
     # The place where the game takes place
     
@@ -235,7 +237,7 @@ class Player(pygame.sprite.Sprite): #MARIN
 
     def explode(self): #CHAO
         # changes the player's sprite to an explosion if it has died
-        self.image = pygame.image.load("boom.png").convert_alpha()
+        self.image = pygame.image.load("sprites/boom.png").convert_alpha()
 
     def undo_move(self): #CHAO
         # player undoes its last move
@@ -279,7 +281,7 @@ class Player(pygame.sprite.Sprite): #MARIN
                     ONE_SCORE += 1                 
             else: # player has not died
                 self.rect = board.get_square(self.row, self.col).get_rect_from_square()
-                cur.image = pygame.image.load("trail"+str(self.index)+".png").convert_alpha() # leave trail behind player
+                cur.image = pygame.image.load("sprites/trail"+str(self.index)+".png").convert_alpha() # leave trail behind player
                 board.occupied.append(cur) # previous square is now occupied
                 self.behind = cur                
 
@@ -326,7 +328,7 @@ class Player(pygame.sprite.Sprite): #MARIN
 
     def set_pic(self, rot): #MARIN
         # rotates the picture to whatever direction the player moves
-        self.image = pygame.image.load("player"+str(self.index)+".png").convert_alpha() # sets player image
+        self.image = pygame.image.load("sprites/player"+str(self.index)+".png").convert_alpha() # sets player image
         self.image = pygame.transform.rotate(self.image, rot) # rotates player image
 
 class Obstacle(pygame.sprite.Sprite): #CHAO
@@ -339,7 +341,7 @@ class Obstacle(pygame.sprite.Sprite): #CHAO
         self.board = board
         self.board.occupied.append(self.board.get_square(self.row, self.col)) # occupies square
         self.rect = self.board.get_square(self.row, self.col).get_rect_from_square()
-        self.image = pygame.image.load("obstacle.png").convert_alpha().convert_alpha() # sets the image for the obstacle
+        self.image = pygame.image.load("sprites/obstacle.png").convert_alpha().convert_alpha() # sets the image for the obstacle
 
 class Score(pygame.sprite.Sprite): #CHAO
     # Draws scorekeeper sprites (is purely aesthetic)
@@ -347,7 +349,7 @@ class Score(pygame.sprite.Sprite): #CHAO
     def __init__(self, index):
         pygame.sprite.Sprite.__init__(self)
         self.index = index
-        self.image = pygame.image.load("score"+str(self.index)+".png").convert_alpha() #set image
+        self.image = pygame.image.load("sprites/score"+str(self.index)+".png").convert_alpha() #set image
         self.rect = self.image.get_rect()
         if self.index == 1: # sets location of player 1's scorekeeper
             self.rect.x = 10
